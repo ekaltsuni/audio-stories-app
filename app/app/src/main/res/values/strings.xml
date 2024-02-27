@@ -1,4 +1,4 @@
 <resources>
-    <string name="app_name">Audio Stories</string>
+    <string name="app_name" translatable="false">Audio Stories</string>
     <string name="red_riding_hood">Η Κοκκινοσκουφίτσα</string>
 </resources>

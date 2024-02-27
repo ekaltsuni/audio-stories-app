@@ -7,7 +7,7 @@
     tools:context=".MainActivity">
 
     <RadioGroup
-        android:id="@+id/radioGroup"
+        android:id="@+id/languageGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="10sp"
@@ -16,19 +16,19 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <RadioButton
-            android:id="@+id/radioButton"
+            android:id="@+id/gr"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="GR" />
 
         <RadioButton
-            android:id="@+id/radioButton2"
+            android:id="@+id/en"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="EN" />
 
         <RadioButton
-            android:id="@+id/radioButton3"
+            android:id="@+id/de"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="DE" />
@@ -44,7 +44,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/radioGroup"
+        app:layout_constraintTop_toBottomOf="@+id/languageGroup"
         app:layout_constraintVertical_bias="0.059" />
 
     <ScrollView

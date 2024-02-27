@@ -1,7 +1,5 @@
 package gr.unipi.android.audiostories.constant;
 
-import static java.util.Map.entry;
-
 import java.util.HashMap;
 import java.util.Map;
 
