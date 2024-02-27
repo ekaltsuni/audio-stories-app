@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -14,7 +15,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
     }
 
-    public void test(View view) {
-        startActivity(new Intent(this, StoryActivity.class));
+    public void goToStory(View view) {
+        Intent intent = new Intent(this, StoryActivity.class);
+        intent.putExtra("story", ((Button)view).getText());
+        startActivity(intent);
     }
 }
