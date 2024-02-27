@@ -17,7 +17,10 @@ public class MainActivity extends AppCompatActivity {
 
     public void goToStory(View view) {
         Intent intent = new Intent(this, StoryActivity.class);
-        intent.putExtra("story", ((Button)view).getText());
+        // Usage of 'if' instead of 'switch' as resources are no longer declared final.
+        if (view.getId() == R.id.button) {
+            intent.putExtra("title", "red_riding_hood");
+        }
         startActivity(intent);
     }
 }
