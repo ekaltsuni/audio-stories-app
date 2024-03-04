@@ -4,6 +4,10 @@ import static android.graphics.text.LineBreaker.JUSTIFICATION_MODE_INTER_WORD;
 
 import static java.lang.String.format;
 
+import static gr.unipi.android.audiostories.constant.AppConstants.FIREBASE_NEWLINE_SEPARATOR;
+import static gr.unipi.android.audiostories.constant.AppConstants.FIREBASE_STORY_TEXT_PATH;
+import static gr.unipi.android.audiostories.constant.AppConstants.TITLE_EXTRAS_KEY;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -34,7 +38,7 @@ public class StoryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_story);
         // Get the story object from the HashMap of stories.
-        String title = getIntent().getStringExtra("title");
+        String title = getIntent().getStringExtra(TITLE_EXTRAS_KEY);
         currentStory = AppConstants.storyMap.get(title);
         // Get the needed components.
         storyText = findViewById(R.id.storyText);
@@ -43,13 +47,13 @@ public class StoryActivity extends AppCompatActivity {
         // Set the components' contents.
         imageView.setImageResource(currentStory.getImageId());
         database = FirebaseDatabase.getInstance();
-        reference = database.getReference(format("stories/%s/text", currentStory.getTitle()));
+        reference = database.getReference(format(FIREBASE_STORY_TEXT_PATH, currentStory.getTitle()));
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 Object value = snapshot.getValue();
                 if (value != null) {
-                    storyText.setText(value.toString().replace("_b ", "\n\n"));
+                    storyText.setText(value.toString().replace(FIREBASE_NEWLINE_SEPARATOR, "\n\n"));
                 }
             }
 
