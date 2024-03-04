@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "561820776847",
+    "firebase_url": "https://servertest-fddb3-default-rtdb.firebaseio.com",
+    "project_id": "servertest-fddb3",
+    "storage_bucket": "servertest-fddb3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:561820776847:android:9a680ac5980c908a8733fa",
+        "android_client_info": {
+          "package_name": "gr.unipi.android.audiostories"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBG5pfxyL5hHIT4hpZjMqBgrrOLp0rSOro"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

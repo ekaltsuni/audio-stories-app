@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name" translatable="false">Audio Stories</string>
     <string name="red_riding_hood">Η Κοκκινοσκουφίτσα</string>
+    <string name="stories_statistics">Stories\' Statistics</string>
+    <string name="audio_story_button">TextView</string>
+    <string name="audio_story">Audio Story</string>
 </resources>

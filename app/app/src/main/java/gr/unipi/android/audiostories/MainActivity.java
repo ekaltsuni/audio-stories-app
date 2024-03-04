@@ -17,6 +17,7 @@ public class MainActivity extends AppCompatActivity {
     RadioGroup languageGroup;
     SharedPreferences prefs;
     String language;
+    public myTts myTts;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,6 +38,8 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
         addLocaleListeners(languageGroup);
+        // Initialize text to speech
+        myTts = new myTts(this);
     }
 
     public void goToStory(View view) {
