@@ -45,8 +45,16 @@ public class MainActivity extends AppCompatActivity {
     public void goToStory(View view) {
         Intent intent = new Intent(this, StoryActivity.class);
         // Usage of 'if' instead of 'switch' as resources are no longer declared final.
-        if (view.getId() == R.id.button) {
+        if (view.getId() == R.id.red_riding_hood) {
             intent.putExtra(TITLE_EXTRAS_KEY, "red_riding_hood");
+        } else if (view.getId() == R.id.snow_white) {
+            intent.putExtra(TITLE_EXTRAS_KEY, "snow_white");
+        } else if (view.getId() == R.id.sleeping_beauty) {
+            intent.putExtra(TITLE_EXTRAS_KEY, "sleeping_beauty");
+        } else if (view.getId() == R.id.jack_and_the_beanstalk) {
+            intent.putExtra(TITLE_EXTRAS_KEY, "jack_and_the_beanstalk");
+        } else if (view.getId() == R.id.ugly_duckling) {
+            intent.putExtra(TITLE_EXTRAS_KEY, "ugly_duckling");
         }
         startActivity(intent);
     }

@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="red_riding_hood">Little Red Riding Hood</string>
+    <string name="snow_white">Snow White</string>
+    <string name="sleeping_beauty">Sleeping Beauty</string>
+    <string name="jack_and_the_beanstalk">Jack and the Beanstalk</string>
+    <string name="ugly_duckling">The Ugly Duckling</string>
 </resources>

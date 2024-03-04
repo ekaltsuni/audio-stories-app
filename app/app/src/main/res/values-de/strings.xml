@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="red_riding_hood">Rotkäppchen</string>
+    <string name="snow_white">Schneewittchen</string>
+    <string name="sleeping_beauty">Dornröschen</string>
+    <string name="jack_and_the_beanstalk">Hans und die Bohnenranke</string>
+    <string name="ugly_duckling">Das hässliche Entlein</string>
 </resources>

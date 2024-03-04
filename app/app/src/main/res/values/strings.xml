@@ -1,6 +1,10 @@
 <resources>
-    <string name="app_name" translatable="false">Audio Stories</string>
+    <string name="app_name" translatable="false">Unipi Audio Stories</string>
     <string name="red_riding_hood">Η Κοκκινοσκουφίτσα</string>
+    <string name="snow_white">Η Χιονάτη</string>
+    <string name="sleeping_beauty">Η Ωραία Κοιμωμένη</string>
+    <string name="jack_and_the_beanstalk">Ο Τζακ και η Φασολιά</string>
+    <string name="ugly_duckling">Το Ασχημόπαπο</string>
     <string name="stories_statistics">Stories\' Statistics</string>
     <string name="audio_story_button">TextView</string>
     <string name="audio_story">Audio Story</string>

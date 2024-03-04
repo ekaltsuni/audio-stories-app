@@ -5,7 +5,9 @@ import static android.graphics.text.LineBreaker.JUSTIFICATION_MODE_INTER_WORD;
 import static java.lang.String.format;
 
 import static gr.unipi.android.audiostories.constant.AppConstants.FIREBASE_NEWLINE_SEPARATOR;
+import static gr.unipi.android.audiostories.constant.AppConstants.FIREBASE_STORY_INFO_PATH;
 import static gr.unipi.android.audiostories.constant.AppConstants.FIREBASE_STORY_TEXT_PATH;
+import static gr.unipi.android.audiostories.constant.AppConstants.INFO_COUNTRY;
 import static gr.unipi.android.audiostories.constant.AppConstants.TITLE_EXTRAS_KEY;
 
 import androidx.annotation.NonNull;
@@ -13,7 +15,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
@@ -31,6 +36,8 @@ public class StoryActivity extends AppCompatActivity {
     DatabaseReference reference;
 
     Story currentStory;
+    TextView storyTitle;
+    TableLayout infoTable;
     TextView storyText;
     ImageView imageView;
     @Override
@@ -41,13 +48,16 @@ public class StoryActivity extends AppCompatActivity {
         String title = getIntent().getStringExtra(TITLE_EXTRAS_KEY);
         currentStory = AppConstants.storyMap.get(title);
         // Get the needed components.
+        storyTitle = findViewById(R.id.storyTitle);
+        storyTitle.setText(currentStory.getTitleResourceId());
+        infoTable = findViewById(R.id.infoTable);
         storyText = findViewById(R.id.storyText);
         storyText.setJustificationMode(JUSTIFICATION_MODE_INTER_WORD);
         imageView = findViewById(R.id.imageView);
         // Set the components' contents.
         imageView.setImageResource(currentStory.getImageId());
         database = FirebaseDatabase.getInstance();
-        reference = database.getReference(format(FIREBASE_STORY_TEXT_PATH, currentStory.getTitle()));
+        reference = database.getReference(format(FIREBASE_STORY_TEXT_PATH, currentStory.getKey()));
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -55,6 +65,35 @@ public class StoryActivity extends AppCompatActivity {
                 if (value != null) {
                     storyText.setText(value.toString().replace(FIREBASE_NEWLINE_SEPARATOR, "\n\n"));
                 }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.e("Firebase error:", error.getMessage());
+            }
+        });
+        reference = database.getReference(format(FIREBASE_STORY_INFO_PATH, currentStory.getKey()));
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String country = snapshot.child("country").getValue().toString();
+                String date = snapshot.child("date").getValue().toString();
+                String author = snapshot.child("author").getValue().toString();
+
+                TableRow row = new TableRow(StoryActivity.this);
+                row.setLayoutParams(new TableLayout.LayoutParams(
+                        TableLayout.LayoutParams.MATCH_PARENT,
+                        TableLayout.LayoutParams.WRAP_CONTENT));
+
+                TextView label_android = new TextView(StoryActivity.this);
+                label_android.setText(format(INFO_COUNTRY, country));
+                label_android.setPadding(50, 25, 25, 10);
+                row.addView(label_android);
+
+                infoTable.addView(row, new TableLayout.LayoutParams(
+                        ViewGroup.LayoutParams.FILL_PARENT,
+                        ViewGroup.LayoutParams.MATCH_PARENT
+                ));
             }
 
             @Override

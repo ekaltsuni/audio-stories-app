@@ -62,7 +62,7 @@
             android:orientation="vertical">
 
             <Button
-                android:id="@+id/button"
+                android:id="@+id/red_riding_hood"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20sp"
@@ -70,31 +70,35 @@
                 android:text="@string/red_riding_hood" />
 
             <Button
-                android:id="@+id/button2"
+                android:id="@+id/snow_white"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20sp"
-                android:text="Button" />
+                android:onClick="goToStory"
+                android:text="@string/snow_white" />
 
             <Button
-                android:id="@+id/button3"
+                android:id="@+id/sleeping_beauty"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20sp"
-                android:text="Button" />
+                android:onClick="goToStory"
+                android:text="@string/sleeping_beauty" />
 
             <Button
-                android:id="@+id/button4"
+                android:id="@+id/jack_and_the_beanstalk"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20sp"
-                android:text="Button" />
+                android:onClick="goToStory"
+                android:text="@string/jack_and_the_beanstalk" />
 
             <Button
-                android:id="@+id/button5"
+                android:id="@+id/ugly_duckling"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Button" />
+                android:onClick="goToStory"
+                android:text="@string/ugly_duckling" />
         </LinearLayout>
     </ScrollView>
 
