@@ -17,9 +17,9 @@ public class AppConstants {
     public static final String FIREBASE_STORY_DATE_PATH = FIREBASE_STORY_INFO_PATH + "/date";
     public static final String FIREBASE_STORY_AUTHOR_PATH = FIREBASE_STORY_INFO_PATH + "/author";
 
-    public static final String INFO_COUNTRY = "Χώρα: %s";
-    public static final String INFO_DATE = "Έτος: %s";
-    public static final String AUTHOR_DATE = "Συγγραφέας: %s";
+    public static final String INFO_COUNTRY = "<b>Χώρα Κυκλοφορίας</b><br>%s";
+    public static final String INFO_DATE = "<b>Έτος Κυκλοφορίας</b><br>%s";
+    public static final String INFO_AUTHOR = "<b>Συγγραφέας</b><br>%s";
     public static final Map<String,Story> storyMap = new HashMap<String,Story>() {{
         put("red_riding_hood", new Story("red_riding_hood", R.string.red_riding_hood, R.drawable.red_riding_hood));
         put("snow_white", new Story("snow_white", R.string.snow_white, R.drawable.snow_white));

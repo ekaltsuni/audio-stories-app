@@ -7,13 +7,16 @@ import static java.lang.String.format;
 import static gr.unipi.android.audiostories.constant.AppConstants.FIREBASE_NEWLINE_SEPARATOR;
 import static gr.unipi.android.audiostories.constant.AppConstants.FIREBASE_STORY_INFO_PATH;
 import static gr.unipi.android.audiostories.constant.AppConstants.FIREBASE_STORY_TEXT_PATH;
+import static gr.unipi.android.audiostories.constant.AppConstants.INFO_AUTHOR;
 import static gr.unipi.android.audiostories.constant.AppConstants.INFO_COUNTRY;
+import static gr.unipi.android.audiostories.constant.AppConstants.INFO_DATE;
 import static gr.unipi.android.audiostories.constant.AppConstants.TITLE_EXTRAS_KEY;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.text.Html;
 import android.util.Log;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -80,20 +83,32 @@ public class StoryActivity extends AppCompatActivity {
                 String date = snapshot.child("date").getValue().toString();
                 String author = snapshot.child("author").getValue().toString();
 
-                TableRow row = new TableRow(StoryActivity.this);
-                row.setLayoutParams(new TableLayout.LayoutParams(
-                        TableLayout.LayoutParams.MATCH_PARENT,
-                        TableLayout.LayoutParams.WRAP_CONTENT));
+                for (int i = 0; i < 3; i++) {
+                    TableRow row = new TableRow(StoryActivity.this);
+                    row.setLayoutParams(new TableLayout.LayoutParams(
+                            TableLayout.LayoutParams.MATCH_PARENT,
+                            TableLayout.LayoutParams.WRAP_CONTENT));
 
-                TextView label_android = new TextView(StoryActivity.this);
-                label_android.setText(format(INFO_COUNTRY, country));
-                label_android.setPadding(50, 25, 25, 10);
-                row.addView(label_android);
+                    TextView label_android = new TextView(StoryActivity.this);
+                    switch (i) {
+                        case 0:
+                            label_android.setText(Html.fromHtml(format(INFO_COUNTRY, country)));
+                            break;
+                        case 1:
+                            label_android.setText(Html.fromHtml(format(INFO_DATE, date)));
+                            break;
+                        case 2:
+                            label_android.setText(Html.fromHtml(format(INFO_AUTHOR, author)));
+                            break;
+                    }
+                    label_android.setPadding(50, 25, 25, 10);
+                    row.addView(label_android);
 
-                infoTable.addView(row, new TableLayout.LayoutParams(
-                        ViewGroup.LayoutParams.FILL_PARENT,
-                        ViewGroup.LayoutParams.MATCH_PARENT
-                ));
+                    infoTable.addView(row, new TableLayout.LayoutParams(
+                            ViewGroup.LayoutParams.WRAP_CONTENT,
+                            ViewGroup.LayoutParams.MATCH_PARENT
+                    ));
+                }
             }
 
             @Override
