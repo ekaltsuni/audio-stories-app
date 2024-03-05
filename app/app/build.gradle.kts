@@ -10,7 +10,7 @@ android {
     defaultConfig {
         applicationId = "gr.unipi.android.audiostories"
         minSdk = 29
-        targetSdk = 34
+        targetSdk = 33
         versionCode = 1
         versionName = "1.0"
 

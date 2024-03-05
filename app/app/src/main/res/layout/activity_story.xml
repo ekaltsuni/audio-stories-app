@@ -94,6 +94,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:backgroundTint="#009688"
+        android:onClick="speak"
         android:text="@string/audio_story"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"

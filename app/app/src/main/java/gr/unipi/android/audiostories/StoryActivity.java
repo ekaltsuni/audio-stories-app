@@ -34,6 +34,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import gr.unipi.android.audiostories.constant.AppConstants;
 import gr.unipi.android.audiostories.model.Story;
+import gr.unipi.android.audiostories.myTts;
 
 public class StoryActivity extends AppCompatActivity {
 
@@ -45,6 +46,8 @@ public class StoryActivity extends AppCompatActivity {
     TableLayout infoTable;
     TextView storyText;
     ImageView imageView;
+    private myTts ttsInstance;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,6 +66,7 @@ public class StoryActivity extends AppCompatActivity {
         imageView.setImageResource(currentStory.getImageId());
         database = FirebaseDatabase.getInstance();
         reference = database.getReference(format(FIREBASE_STORY_TEXT_PATH, currentStory.getKey()));
+        ttsInstance = new myTts(this);
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -84,7 +88,6 @@ public class StoryActivity extends AppCompatActivity {
                 String country = snapshot.child("country").getValue().toString();
                 String date = snapshot.child("date").getValue().toString();
                 String author = snapshot.child("author").getValue().toString();
-
                 for (int i = 0; i < 3; i++) {
                     TableRow row = new TableRow(StoryActivity.this);
                     row.setLayoutParams(new TableLayout.LayoutParams(
@@ -123,5 +126,16 @@ public class StoryActivity extends AppCompatActivity {
                 Log.e("Firebase error:", error.getMessage());
             }
         });
+    }
+    public void speak(View view) {
+        String storyContent = storyText.getText().toString();
+        ttsInstance.speak(storyContent);
+    };
+    protected void onPause() {
+        super.onPause();
+        // Stop the text-to-speech when the activity is paused
+        if (ttsInstance != null) {
+            ttsInstance.stopSpeaking();
+        }
     }
 }
