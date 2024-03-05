@@ -15,9 +15,11 @@ import static gr.unipi.android.audiostories.constant.AppConstants.TITLE_EXTRAS_K
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.text.Html;
 import android.util.Log;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TableLayout;
@@ -89,25 +91,30 @@ public class StoryActivity extends AppCompatActivity {
                             TableLayout.LayoutParams.MATCH_PARENT,
                             TableLayout.LayoutParams.WRAP_CONTENT));
 
-                    TextView label_android = new TextView(StoryActivity.this);
+                    TextView rowText = new TextView(StoryActivity.this);
                     switch (i) {
                         case 0:
-                            label_android.setText(Html.fromHtml(format(INFO_COUNTRY, country)));
+                            rowText.setText(Html.fromHtml(format(INFO_COUNTRY, country)));
                             break;
                         case 1:
-                            label_android.setText(Html.fromHtml(format(INFO_DATE, date)));
+                            rowText.setText(Html.fromHtml(format(INFO_DATE, date)));
                             break;
                         case 2:
-                            label_android.setText(Html.fromHtml(format(INFO_AUTHOR, author)));
+                            rowText.setText(Html.fromHtml(format(INFO_AUTHOR, author)));
                             break;
                     }
-                    label_android.setPadding(50, 25, 25, 10);
-                    row.addView(label_android);
+                    rowText.setPadding(50, 25, 25, 10);
+                    row.addView(rowText);
 
                     infoTable.addView(row, new TableLayout.LayoutParams(
                             ViewGroup.LayoutParams.WRAP_CONTENT,
                             ViewGroup.LayoutParams.MATCH_PARENT
                     ));
+                }
+                // In landscape mode hide extra information
+                if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                    infoTable.setVisibility(View.GONE);
+                    imageView.setVisibility(View.GONE);
                 }
             }
 
