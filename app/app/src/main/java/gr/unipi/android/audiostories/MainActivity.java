@@ -1,5 +1,6 @@
 package gr.unipi.android.audiostories;
 
+import static gr.unipi.android.audiostories.constant.AppConstants.LANGUAGE_EXTRAS_KEY;
 import static gr.unipi.android.audiostories.constant.AppConstants.LANGUAGE_PREFS_KEY;
 import static gr.unipi.android.audiostories.constant.AppConstants.TITLE_EXTRAS_KEY;
 
@@ -22,8 +23,16 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        languageGroup = findViewById(R.id.languageGroup);
 
+        languageGroup = findViewById(R.id.languageGroup);
+        setInitialLanguage();
+        addLocaleListeners(languageGroup);
+
+        // Initialize text to speech
+        myTts = new myTts(this);
+    }
+
+    private void setInitialLanguage() {
         prefs = getPreferences(MODE_PRIVATE);
         language = prefs.getString(LANGUAGE_PREFS_KEY, getResources().getConfiguration().getLocales().get(0).getLanguage());
         switch (language) {
@@ -37,9 +46,6 @@ public class MainActivity extends AppCompatActivity {
                 languageGroup.check(R.id.de);
                 break;
         }
-        addLocaleListeners(languageGroup);
-        // Initialize text to speech
-        myTts = new myTts(this);
     }
 
     public void goToStory(View view) {
@@ -56,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
         } else if (view.getId() == R.id.ugly_duckling) {
             intent.putExtra(TITLE_EXTRAS_KEY, "ugly_duckling");
         }
+        intent.putExtra(LANGUAGE_EXTRAS_KEY, language);
         startActivity(intent);
     }
 

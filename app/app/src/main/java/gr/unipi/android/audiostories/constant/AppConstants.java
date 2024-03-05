@@ -11,6 +11,7 @@ import gr.unipi.android.audiostories.model.Story;
 public class AppConstants {
     public static final String LANGUAGE_PREFS_KEY = "language";
     public static final String TITLE_EXTRAS_KEY = "title";
+    public static final String LANGUAGE_EXTRAS_KEY = "language";
     public static final String FIREBASE_NEWLINE_SEPARATOR = "_b ";
     public static final String FIREBASE_STORY_TEXT_PATH = "stories/%s/text";
     public static final String FIREBASE_STORY_INFO_PATH = "stories/%s/info";
