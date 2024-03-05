@@ -1,5 +1,7 @@
 package gr.unipi.android.audiostories.constant;
 
+import android.content.Context;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -7,19 +9,11 @@ import gr.unipi.android.audiostories.R;
 import gr.unipi.android.audiostories.model.Story;
 
 public class AppConstants {
-
     public static final String LANGUAGE_PREFS_KEY = "language";
     public static final String TITLE_EXTRAS_KEY = "title";
     public static final String FIREBASE_NEWLINE_SEPARATOR = "_b ";
     public static final String FIREBASE_STORY_TEXT_PATH = "stories/%s/text";
     public static final String FIREBASE_STORY_INFO_PATH = "stories/%s/info";
-    public static final String FIREBASE_STORY_COUNTRY_PATH = FIREBASE_STORY_INFO_PATH + "/country";
-    public static final String FIREBASE_STORY_DATE_PATH = FIREBASE_STORY_INFO_PATH + "/date";
-    public static final String FIREBASE_STORY_AUTHOR_PATH = FIREBASE_STORY_INFO_PATH + "/author";
-
-    public static final String INFO_COUNTRY = "<b>Χώρα Κυκλοφορίας</b><br>%s";
-    public static final String INFO_DATE = "<b>Έτος Κυκλοφορίας</b><br>%s";
-    public static final String INFO_AUTHOR = "<b>Συγγραφέας</b><br>%s";
     public static final Map<String,Story> storyMap = new HashMap<String,Story>() {{
         put("red_riding_hood", new Story("red_riding_hood", R.string.red_riding_hood, R.drawable.red_riding_hood));
         put("snow_white", new Story("snow_white", R.string.snow_white, R.drawable.snow_white));

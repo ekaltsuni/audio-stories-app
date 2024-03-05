@@ -8,4 +8,7 @@
     <string name="stories_statistics">Stories\' Statistics</string>
     <string name="audio_story_button">TextView</string>
     <string name="audio_story">Audio Story</string>
+    <string name="author">Συγγραφέας</string>
+    <string name="date">Έτος Κυκλοφορίας</string>
+    <string name="country">Χώρα Κυκλοφορίας</string>
 </resources>

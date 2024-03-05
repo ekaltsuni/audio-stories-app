@@ -7,9 +7,6 @@ import static java.lang.String.format;
 import static gr.unipi.android.audiostories.constant.AppConstants.FIREBASE_NEWLINE_SEPARATOR;
 import static gr.unipi.android.audiostories.constant.AppConstants.FIREBASE_STORY_INFO_PATH;
 import static gr.unipi.android.audiostories.constant.AppConstants.FIREBASE_STORY_TEXT_PATH;
-import static gr.unipi.android.audiostories.constant.AppConstants.INFO_AUTHOR;
-import static gr.unipi.android.audiostories.constant.AppConstants.INFO_COUNTRY;
-import static gr.unipi.android.audiostories.constant.AppConstants.INFO_DATE;
 import static gr.unipi.android.audiostories.constant.AppConstants.TITLE_EXTRAS_KEY;
 
 import androidx.annotation.NonNull;
@@ -33,6 +30,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import gr.unipi.android.audiostories.constant.AppConstants;
+import gr.unipi.android.audiostories.constant.ContextConstants;
 import gr.unipi.android.audiostories.model.Story;
 import gr.unipi.android.audiostories.myTts;
 
@@ -40,6 +38,7 @@ public class StoryActivity extends AppCompatActivity {
 
     FirebaseDatabase database;
     DatabaseReference reference;
+    ContextConstants ctxConstants;
 
     Story currentStory;
     TextView storyTitle;
@@ -52,6 +51,7 @@ public class StoryActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_story);
+        ctxConstants = new ContextConstants(this);
         // Get the story object from the HashMap of stories.
         String title = getIntent().getStringExtra(TITLE_EXTRAS_KEY);
         currentStory = AppConstants.storyMap.get(title);
@@ -97,13 +97,13 @@ public class StoryActivity extends AppCompatActivity {
                     TextView rowText = new TextView(StoryActivity.this);
                     switch (i) {
                         case 0:
-                            rowText.setText(Html.fromHtml(format(INFO_COUNTRY, country)));
+                            rowText.setText(Html.fromHtml(format(ctxConstants.INFO_COUNTRY, country)));
                             break;
                         case 1:
-                            rowText.setText(Html.fromHtml(format(INFO_DATE, date)));
+                            rowText.setText(Html.fromHtml(format(ctxConstants.INFO_DATE, date)));
                             break;
                         case 2:
-                            rowText.setText(Html.fromHtml(format(INFO_AUTHOR, author)));
+                            rowText.setText(Html.fromHtml(format(ctxConstants.INFO_AUTHOR, author)));
                             break;
                     }
                     rowText.setPadding(50, 25, 25, 10);

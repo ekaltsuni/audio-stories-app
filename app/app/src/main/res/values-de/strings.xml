@@ -5,4 +5,7 @@
     <string name="sleeping_beauty">Dornröschen</string>
     <string name="jack_and_the_beanstalk">Hans und die Bohnenranke</string>
     <string name="ugly_duckling">Das hässliche Entlein</string>
+    <string name="author">Autor</string>
+    <string name="date">Veröffentlichungsdatum</string>
+    <string name="country">Erscheinungsland</string>
 </resources>

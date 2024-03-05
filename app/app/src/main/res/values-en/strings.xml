@@ -5,4 +5,7 @@
     <string name="sleeping_beauty">Sleeping Beauty</string>
     <string name="jack_and_the_beanstalk">Jack and the Beanstalk</string>
     <string name="ugly_duckling">The Ugly Duckling</string>
+    <string name="author">Author</string>
+    <string name="date">Publication Date</string>
+    <string name="country">Publication Country</string>
 </resources>
