@@ -11,4 +11,7 @@
     <string name="author">Συγγραφέας</string>
     <string name="date">Έτος Κυκλοφορίας</string>
     <string name="country">Χώρα Κυκλοφορίας</string>
+    <string name="my_audio_stats">My Audio Stats</string>
+    <string name="add_to_favorites">Add to Favorites</string>
+    <string name="story_statistics">Story Statistics</string>
 </resources>

@@ -11,6 +11,7 @@ import static gr.unipi.android.audiostories.constant.AppConstants.LANGUAGE_EXTRA
 import static gr.unipi.android.audiostories.constant.AppConstants.TITLE_EXTRAS_KEY;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.res.Configuration;
@@ -19,10 +20,12 @@ import android.text.Html;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -47,6 +50,7 @@ public class StoryActivity extends AppCompatActivity {
     TableLayout infoTable;
     TextView storyText;
     ImageView imageView;
+    Button favorite;
     private MyTts ttsInstance;
 
     @Override
@@ -69,6 +73,7 @@ public class StoryActivity extends AppCompatActivity {
         storyText = findViewById(R.id.storyText);
         storyText.setJustificationMode(JUSTIFICATION_MODE_INTER_WORD);
         imageView = findViewById(R.id.imageView);
+        favorite = findViewById(R.id.favorite);
 
         // Initialize Text to Speech
         ttsInstance = new MyTts(this);
@@ -160,5 +165,17 @@ public class StoryActivity extends AppCompatActivity {
         if (ttsInstance != null) {
             ttsInstance.stopSpeaking();
         }
+    }
+
+    public void save(View view) {
+        showMessage("Saved", "Story added to favorites.");
+    }
+
+    public void showMessage(String title, String message) {
+        new AlertDialog.Builder(this)
+                .setTitle(title)
+                .setMessage(message)
+                .setCancelable(true)
+                .show();
     }
 }

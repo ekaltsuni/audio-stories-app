@@ -85,4 +85,9 @@ public class MainActivity extends AppCompatActivity {
             onConfigurationChanged(getResources().getConfiguration());
         });
     }
+
+    public void goStats(View view) {
+        Intent intent = new Intent(this, StatisticsActivity.class);
+        startActivity(intent);
+    }
 }
