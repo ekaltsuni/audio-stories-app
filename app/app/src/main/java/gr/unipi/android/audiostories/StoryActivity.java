@@ -47,7 +47,7 @@ public class StoryActivity extends AppCompatActivity {
     TableLayout infoTable;
     TextView storyText;
     ImageView imageView;
-    private myTts ttsInstance;
+    private MyTts ttsInstance;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,7 +71,7 @@ public class StoryActivity extends AppCompatActivity {
         imageView = findViewById(R.id.imageView);
 
         // Initialize Text to Speech
-        ttsInstance = new myTts(this);
+        ttsInstance = new MyTts(this);
 
         // Set the components' contents.
         imageView.setImageResource(currentStory.getImageId());
@@ -148,7 +148,9 @@ public class StoryActivity extends AppCompatActivity {
     }
 
     public void speak(View view) {
-        String storyContent = storyText.getText().toString();
+        String storyContent = storyTitle.getText().toString();
+        ttsInstance.speak(storyContent);
+        storyContent = storyText.getText().toString();
         ttsInstance.speak(storyContent);
     }
 

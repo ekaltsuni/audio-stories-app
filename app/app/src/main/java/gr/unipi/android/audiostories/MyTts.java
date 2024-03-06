@@ -1,7 +1,7 @@
 package gr.unipi.android.audiostories;
 import android.content.Context;
 import android.speech.tts.TextToSpeech;
-public class myTts {
+public class MyTts {
     private TextToSpeech tts;
     private Context context;
     TextToSpeech.OnInitListener  initListener= new TextToSpeech.OnInitListener() {
@@ -13,7 +13,7 @@ public class myTts {
         }
     };
 
-    public myTts(Context context){
+    public MyTts(Context context){
         this.context = context;
         tts = new TextToSpeech(context,initListener);
     }
