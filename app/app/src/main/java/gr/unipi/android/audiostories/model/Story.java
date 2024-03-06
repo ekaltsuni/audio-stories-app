@@ -2,6 +2,7 @@ package gr.unipi.android.audiostories.model;
 
 public class Story {
     private final String key;
+    //
     private final int titleResourceId;
     private final int imageId;
     public Story(String key, int titleResourceId, int imageId) {

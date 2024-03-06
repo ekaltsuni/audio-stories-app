@@ -38,6 +38,7 @@ import java.util.Objects;
 import gr.unipi.android.audiostories.constant.AppConstants;
 import gr.unipi.android.audiostories.constant.ContextConstants;
 import gr.unipi.android.audiostories.model.Story;
+import gr.unipi.android.audiostories.utility.Utilities;
 
 public class StoryActivity extends AppCompatActivity {
 
@@ -60,7 +61,7 @@ public class StoryActivity extends AppCompatActivity {
 
         // For translatable constants
         ctxConstants = new ContextConstants(this);
-
+        // apo dw tha traviksw tous titlous gia ta favorites => sqlite currentstory.title
         String title = getIntent().getStringExtra(TITLE_EXTRAS_KEY);
         String language = getIntent().getStringExtra(LANGUAGE_EXTRAS_KEY);
         // Get the story object from the HashMap of stories.
@@ -68,6 +69,7 @@ public class StoryActivity extends AppCompatActivity {
 
         // Get the needed components.
         storyTitle = findViewById(R.id.storyTitle);
+        // number that matches database resource id for multilanguage, apothikeuw int sti vasi kai matcharw titlo
         storyTitle.setText(currentStory.getTitleResourceId());
         infoTable = findViewById(R.id.infoTable);
         storyText = findViewById(R.id.storyText);
@@ -126,7 +128,7 @@ public class StoryActivity extends AppCompatActivity {
             }
         });
     }
-
+    // add rows info to table
     private void addInfoRow(int i, String country, String date, String author) {
         TableRow row = new TableRow(StoryActivity.this);
         row.setLayoutParams(new TableLayout.LayoutParams(
@@ -168,14 +170,15 @@ public class StoryActivity extends AppCompatActivity {
     }
 
     public void save(View view) {
-        showMessage("Saved", "Story added to favorites.");
+        String insertSQL = "Insert or ignore into StoryStats(Setup,Punchline,Joke_ID) " +
+                "values(?,?,?)";
+        String[] parameters = new String[3];
+        parameters[0] = ;
+        parameters[1] = ;
+        parameters[2] = TRUE;
+        database.execSQL(insertSQL,parameters);
+        Utilities.showMessage(this, "Saved", "Story added to favorites.");
     }
 
-    public void showMessage(String title, String message) {
-        new AlertDialog.Builder(this)
-                .setTitle(title)
-                .setMessage(message)
-                .setCancelable(true)
-                .show();
-    }
+
 }

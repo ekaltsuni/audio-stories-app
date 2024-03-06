@@ -6,6 +6,7 @@ import static gr.unipi.android.audiostories.constant.AppConstants.TITLE_EXTRAS_K
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.RadioGroup;
@@ -19,6 +20,14 @@ public class MainActivity extends AppCompatActivity {
     SharedPreferences prefs;
     String language;
     public MyTts myTts;
+    SQLiteDatabase database;
+
+    String createTableSQL = "CREATE TABLE if not exists StoryStats (\n" +
+            "    titleResourceId INTEGER PRIMARY KEY    NOT NULL,\n" +
+            "    favorite BOOLEAN,\n" +
+            "    favoriteCount INTEGER \n" +
+            ");";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,6 +39,9 @@ public class MainActivity extends AppCompatActivity {
 
         // Initialize text to speech
         myTts = new MyTts(this);
+
+        database = openOrCreateDatabase("StoryStats.db",MODE_PRIVATE,null);
+        database.execSQL(createTableSQL);
     }
 
     private void setInitialLanguage() {
@@ -53,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
         // Usage of 'if' instead of 'switch' as resources are no longer declared final.
         if (view.getId() == R.id.red_riding_hood) {
             intent.putExtra(TITLE_EXTRAS_KEY, "red_riding_hood");
+            // update sqlite +1
         } else if (view.getId() == R.id.snow_white) {
             intent.putExtra(TITLE_EXTRAS_KEY, "snow_white");
         } else if (view.getId() == R.id.sleeping_beauty) {
