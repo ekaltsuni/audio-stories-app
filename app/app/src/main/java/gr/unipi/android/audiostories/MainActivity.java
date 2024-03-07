@@ -3,6 +3,7 @@ package gr.unipi.android.audiostories;
 import static gr.unipi.android.audiostories.constant.AppConstants.LANGUAGE_EXTRAS_KEY;
 import static gr.unipi.android.audiostories.constant.AppConstants.LANGUAGE_PREFS_KEY;
 import static gr.unipi.android.audiostories.constant.AppConstants.TITLE_EXTRAS_KEY;
+import static gr.unipi.android.audiostories.constant.AppConstants.sDatabase;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -20,12 +21,11 @@ public class MainActivity extends AppCompatActivity {
     SharedPreferences prefs;
     String language;
     public MyTts myTts;
-    SQLiteDatabase database;
 
     String createTableSQL = "CREATE TABLE if not exists StoryStats (\n" +
-            "    titleResourceId INTEGER PRIMARY KEY    NOT NULL,\n" +
+            "    titleResourceId STRING PRIMARY KEY    NOT NULL,\n" +
             "    favorite BOOLEAN,\n" +
-            "    favoriteCount INTEGER \n" +
+            "    audioCount INTEGER \n" +
             ");";
 
     @Override
@@ -40,8 +40,26 @@ public class MainActivity extends AppCompatActivity {
         // Initialize text to speech
         myTts = new MyTts(this);
 
-        database = openOrCreateDatabase("StoryStats.db",MODE_PRIVATE,null);
-        database.execSQL(createTableSQL);
+        sDatabase = openOrCreateDatabase("StoryStats.db",MODE_PRIVATE,null);
+        sDatabase.execSQL(createTableSQL);
+
+        // Insert initial values if the table was just created
+        insertInitialValues();
+    }
+
+    private void insertInitialValues() {
+        Object[][] entries = {
+                {"jack_and_the_beanstalk", false, 0},
+                {"red_riding_hood", false, 0},
+                {"sleeping_beauty", false, 0},
+                {"snow_white", false, 0},
+                {"ugly_duckling", false, 0}
+        };
+
+        for (Object[] entry : entries) {
+            String insertSQL = "INSERT OR IGNORE INTO StoryStats (titleResourceId, favorite, audioCount) VALUES (?, ?, ?)";
+            sDatabase.execSQL(insertSQL, entry);
+        }
     }
 
     private void setInitialLanguage() {

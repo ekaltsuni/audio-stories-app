@@ -9,12 +9,13 @@ import static gr.unipi.android.audiostories.constant.AppConstants.FIREBASE_STORY
 import static gr.unipi.android.audiostories.constant.AppConstants.FIREBASE_STORY_TEXT_PATH;
 import static gr.unipi.android.audiostories.constant.AppConstants.LANGUAGE_EXTRAS_KEY;
 import static gr.unipi.android.audiostories.constant.AppConstants.TITLE_EXTRAS_KEY;
+import static gr.unipi.android.audiostories.constant.AppConstants.sDatabase;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.res.Configuration;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.text.Html;
 import android.util.Log;
@@ -25,7 +26,6 @@ import android.widget.ImageView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -53,6 +53,8 @@ public class StoryActivity extends AppCompatActivity {
     ImageView imageView;
     Button favorite;
     private MyTts ttsInstance;
+    int audioCount;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -170,15 +172,32 @@ public class StoryActivity extends AppCompatActivity {
     }
 
     public void save(View view) {
-        String insertSQL = "Insert or ignore into StoryStats(Setup,Punchline,Joke_ID) " +
-                "values(?,?,?)";
-        String[] parameters = new String[3];
-        parameters[0] = ;
-        parameters[1] = ;
-        parameters[2] = TRUE;
-        database.execSQL(insertSQL,parameters);
+        String updateSQL = "UPDATE StoryStats SET favorite = ? WHERE titleResourceId = ?";
+        Object[] parameters = {1, currentStory.getTitleResourceId()};
+        sDatabase.execSQL(updateSQL,parameters);
         Utilities.showMessage(this, "Saved", "Story added to favorites.");
     }
 
+    public void audioButton(View view) {
+        String updateSQL = "UPDATE StoryStats SET audioCount = ? WHERE titleResourceId = ?";
+        int currentAudioCount = getCurrentAudioCount();
+        int newAudioCount = currentAudioCount + 1;
+        Object[] parameters = {newAudioCount, currentStory.getTitleResourceId()};
+        sDatabase.execSQL(updateSQL,parameters);
+    }
+
+
+    private int getCurrentAudioCount() {
+        Cursor cursor = sDatabase.rawQuery("SELECT audioCount FROM StoryStats WHERE titleResourceId = ?",
+                new String[]{String.valueOf(currentStory.getTitleResourceId())});
+        int currentAudioCount = 0;
+
+        if (cursor.moveToFirst()) {
+            audioCount = cursor.getInt(2);
+        }
+        cursor.close();
+
+        return currentAudioCount;
+    }
 
 }

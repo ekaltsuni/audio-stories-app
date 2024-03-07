@@ -1,6 +1,7 @@
 package gr.unipi.android.audiostories.constant;
 
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -9,6 +10,8 @@ import gr.unipi.android.audiostories.R;
 import gr.unipi.android.audiostories.model.Story;
 
 public class AppConstants {
+    public static SQLiteDatabase sDatabase;
+
     public static final String LANGUAGE_PREFS_KEY = "language";
     public static final String TITLE_EXTRAS_KEY = "title";
     public static final String LANGUAGE_EXTRAS_KEY = "language";
