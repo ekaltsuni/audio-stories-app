@@ -157,6 +157,11 @@ public class StoryActivity extends AppCompatActivity {
     }
 
     public void speak(View view) {
+        String updateSQL = "UPDATE StoryStats SET audioCount = ? WHERE titleResourceId = ?";
+        int newAudioCount = getCurrentAudioCount() + 1;
+        Object[] parameters = {newAudioCount, currentStory.getTitleResourceId()};
+        sDatabase.execSQL(updateSQL,parameters);
+
         String storyContent = storyTitle.getText().toString();
         ttsInstance.speak(storyContent);
         storyContent = storyText.getText().toString();
@@ -179,26 +184,11 @@ public class StoryActivity extends AppCompatActivity {
         Utilities.showMessage(this, "Saved", "Story added to favorites.");
     }
 
-    // not working
-    public void audioButton(View view) {
-        String updateSQL = "UPDATE StoryStats SET audioCount = ? WHERE titleResourceId = ?";
-        int currentAudioCount = getCurrentAudioCount();
-        int newAudioCount = currentAudioCount + 1;
-        Object[] parameters = {newAudioCount, currentStory.getTitleResourceId()};
-        sDatabase.execSQL(updateSQL,parameters);
-    }
-
-
     private int getCurrentAudioCount() {
         Cursor cursor = sDatabase.rawQuery("SELECT audioCount FROM StoryStats WHERE titleResourceId = ?",
                 new String[]{String.valueOf(currentStory.getTitleResourceId())});
-        int currentAudioCount = 0;
-
-        if (cursor.moveToFirst()) {
-            audioCount = cursor.getInt(2);
-        }
+        int currentAudioCount = cursor.moveToFirst() ? cursor.getInt(0) : 0;
         cursor.close();
-
         return currentAudioCount;
     }
 

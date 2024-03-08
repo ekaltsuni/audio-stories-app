@@ -49,11 +49,11 @@ public class MainActivity extends AppCompatActivity {
 
     private void insertInitialValues() {
         Object[][] entries = {
-                {"jack_and_the_beanstalk", false, 0},
-                {"red_riding_hood", false, 0},
-                {"sleeping_beauty", false, 0},
-                {"snow_white", false, 0},
-                {"ugly_duckling", false, 0}
+                {R.string.jack_and_the_beanstalk, false, 0},
+                {R.string.red_riding_hood, false, 0},
+                {R.string.sleeping_beauty, false, 0},
+                {R.string.snow_white, false, 0},
+                {R.string.ugly_duckling, false, 0}
         };
 
         for (Object[] entry : entries) {
