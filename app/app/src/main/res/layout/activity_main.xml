@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#F2E3D5"
     android:onClick="loadStats"
     tools:context=".MainActivity">
 
@@ -20,33 +21,38 @@
             android:id="@+id/gr"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="GR" />
+            android:text="GR"
+            android:textColor="#012E40" />
 
         <RadioButton
             android:id="@+id/en"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="EN" />
+            android:text="EN"
+            android:textColor="#012E40" />
 
         <RadioButton
             android:id="@+id/de"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="DE" />
+            android:text="DE"
+            android:textColor="#012E40" />
     </RadioGroup>
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Unipi Audio Stories"
-        android:textSize="20sp"
+        android:text="@string/unipi_audio_stories"
+        android:textColor="#012E40"
+        android:textColorHint="#012E40"
+        android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/languageGroup"
-        app:layout_constraintVertical_bias="0.059" />
+        app:layout_constraintVertical_bias="0.058" />
 
     <ScrollView
         android:id="@+id/scrollView2"
@@ -69,6 +75,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20sp"
+                android:backgroundTint="#3CA6A6"
                 android:onClick="goToStory"
                 android:text="@string/red_riding_hood" />
 
@@ -77,6 +84,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20sp"
+                android:backgroundTint="#3CA6A6"
                 android:onClick="goToStory"
                 android:text="@string/snow_white" />
 
@@ -85,6 +93,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20sp"
+                android:backgroundTint="#3CA6A6"
                 android:onClick="goToStory"
                 android:text="@string/sleeping_beauty" />
 
@@ -93,6 +102,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20sp"
+                android:backgroundTint="#3CA6A6"
                 android:onClick="goToStory"
                 android:text="@string/jack_and_the_beanstalk" />
 
@@ -100,6 +110,7 @@
                 android:id="@+id/ugly_duckling"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:backgroundTint="#3CA6A6"
                 android:onClick="goToStory"
                 android:text="@string/ugly_duckling" />
         </LinearLayout>
@@ -109,14 +120,26 @@
         android:id="@+id/statsButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:backgroundTint="#009688"
+        android:backgroundTint="#024959"
         android:onClick="goStats"
         android:text="@string/my_audio_stats"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.505"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.929" />
+        app:layout_constraintVertical_bias="0.918" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="85dp"
+        android:layout_height="88dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.215"
+        app:srcCompat="@drawable/fairytales_icon" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -8,4 +8,11 @@
     <string name="author">Autor</string>
     <string name="date">Veröffentlichungsdatum</string>
     <string name="country">Erscheinungsland</string>
+    <string name="my_audio_stats">Meine Audiostatistiken</string>
+    <string name="add_to_favorites">Favoriten hinzufügen</string>
+    <string name="story_statistics">Story-Statistiken</string>
+    <string name="favorite_stories">Lieblingsgeschichten:</string>
+    <string name="audio_story">Audio-Story</string>
+    <string name="audio_plays">Hörspiele:</string>
+    <string name="unipi_audio_stories">Audio-Märchen</string>
 </resources>

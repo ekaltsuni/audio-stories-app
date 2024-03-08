@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:backgroundTint="#009688"
+    android:background="#F2E3D5"
     tools:context=".StoryActivity">
 
     <TextView
@@ -12,6 +12,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="TextView"
+        android:textColor="#012E40"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -19,7 +20,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.074"
-        app:layout_constraintWidth_percent="0.4"/>
+        app:layout_constraintWidth_percent="0.4" />
 
     <ImageView
         android:id="@+id/imageView"
@@ -86,7 +87,8 @@
                 android:id="@+id/storyText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="TextView" />
+                android:text="TextView"
+                android:textColor="#012E40" />
         </LinearLayout>
     </ScrollView>
 
@@ -94,13 +96,13 @@
         android:id="@+id/audioButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:backgroundTint="#009688"
+        android:backgroundTint="#3CA6A6"
         android:onClick="speak"
         android:text="@string/audio_story"
-        android:textSize="16sp"
+        android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.922"
+        app:layout_constraintHorizontal_bias="0.934"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.026"
@@ -110,16 +112,16 @@
         android:id="@+id/favorite"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:backgroundTint="#673AB7"
+        android:backgroundTint="#024959"
         android:onClick="save"
         android:text="@string/add_to_favorites"
-        android:textSize="16sp"
+        android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.922"
+        app:layout_constraintHorizontal_bias="0.934"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.116"
+        app:layout_constraintVertical_bias="0.104"
         app:layout_constraintWidth_percent="0.4" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

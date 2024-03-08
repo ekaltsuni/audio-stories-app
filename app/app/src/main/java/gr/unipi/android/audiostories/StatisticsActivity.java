@@ -44,7 +44,7 @@ public class StatisticsActivity extends AppCompatActivity {
                 TableLayout.LayoutParams.MATCH_PARENT,
                 TableLayout.LayoutParams.WRAP_CONTENT));
         TextView favoriteText = new TextView(this);
-        favoriteText.setText("Favorite Stories:");
+        favoriteText.setText(R.string.favorite_stories);
         favoriteRow.addView(favoriteText);
         tableLayout.addView(favoriteRow, new TableLayout.LayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT,
@@ -57,7 +57,7 @@ public class StatisticsActivity extends AppCompatActivity {
                 TableLayout.LayoutParams.MATCH_PARENT,
                 TableLayout.LayoutParams.WRAP_CONTENT));
         TextView audioPlaysText = new TextView(this);
-        audioPlaysText.setText("Audio Plays:");
+        audioPlaysText.setText(R.string.audio_plays);
         audioPlaysRow.addView(audioPlaysText);
         tableLayout.addView(audioPlaysRow, new TableLayout.LayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT,

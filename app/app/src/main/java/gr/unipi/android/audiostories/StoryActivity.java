@@ -171,6 +171,7 @@ public class StoryActivity extends AppCompatActivity {
         }
     }
 
+    // not working
     public void save(View view) {
         String updateSQL = "UPDATE StoryStats SET favorite = ? WHERE titleResourceId = ?";
         Object[] parameters = {1, currentStory.getTitleResourceId()};
@@ -178,6 +179,7 @@ public class StoryActivity extends AppCompatActivity {
         Utilities.showMessage(this, "Saved", "Story added to favorites.");
     }
 
+    // not working
     public void audioButton(View view) {
         String updateSQL = "UPDATE StoryStats SET audioCount = ? WHERE titleResourceId = ?";
         int currentAudioCount = getCurrentAudioCount();
