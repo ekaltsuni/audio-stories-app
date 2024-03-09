@@ -15,4 +15,5 @@
     <string name="audio_plays">Αναπαραγωγές ήχου:</string>
     <string name="unipi_audio_stories">Ηχητικά Παραμύθια</string>
     <string name="my_audio_stats">Τα στατιστικά μου</string>
+    <string name="remove_from_favorites">Αφαίρεση απ\' τα Αγαπημένα</string>
 </resources>

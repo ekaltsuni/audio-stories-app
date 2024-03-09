@@ -15,4 +15,5 @@
     <string name="audio_plays">Hörspiele:</string>
     <string name="unipi_audio_stories">Audio-Märchen</string>
     <string name="my_audio_stats">Meine Story-Statistiken</string>
+    <string name="remove_from_favorites">Favoriten entfernen</string>
 </resources>

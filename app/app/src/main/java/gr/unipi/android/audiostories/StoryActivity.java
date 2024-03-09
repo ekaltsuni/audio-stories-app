@@ -86,6 +86,18 @@ public class StoryActivity extends AppCompatActivity {
         addStoryDatabaseListener();
         reference = database.getReference(format(FIREBASE_STORY_INFO_PATH, currentStory.getKey()));
         setStoryInfoDatabaseListener(language);
+
+        // Set favorite's button initial text
+        String checkSQL = "SELECT EXISTS (SELECT * FROM StoryStats WHERE titleResourceId = ? AND favorite = 1)";
+        String[] parameters = {String.valueOf(currentStory.getTitleResourceId())};
+        Cursor cur = sDatabase.rawQuery(checkSQL, parameters);
+        if (cur.moveToFirst()) {
+            if (cur.getInt(0) > 0) {
+                favorite.setText(R.string.remove_from_favorites);
+            } else {
+                favorite.setText(R.string.add_to_favorites);
+            }
+        }
     }
 
     private void addStoryDatabaseListener() {
@@ -173,12 +185,25 @@ public class StoryActivity extends AppCompatActivity {
         }
     }
 
-    // not working
     public void save(View view) {
-        String updateSQL = "UPDATE StoryStats SET favorite = ? WHERE titleResourceId = ?";
-        Object[] parameters = {1, currentStory.getTitleResourceId()};
-        sDatabase.execSQL(updateSQL,parameters);
-        Utilities.showMessage(this, "Saved", "Story added to favorites.");
+        String checkSQL = "SELECT EXISTS (SELECT * FROM StoryStats WHERE titleResourceId = ? AND favorite = 1)";
+        String[] parameters = {String.valueOf(currentStory.getTitleResourceId())};
+        Cursor cur = sDatabase.rawQuery(checkSQL, parameters);
+        if (cur.moveToFirst()) {
+            String updateSQL = "UPDATE StoryStats SET favorite = ? WHERE titleResourceId = ?";
+            if (cur.getInt(0) > 0) {
+                Object[] parameters2 = {0, currentStory.getTitleResourceId()};
+                sDatabase.execSQL(updateSQL,parameters2);
+                Utilities.showMessage(this, "Removed", "Story removed from favorites.");
+                favorite.setText(R.string.add_to_favorites);
+            } else {
+                Object[] parameters2 = {1, currentStory.getTitleResourceId()};
+                sDatabase.execSQL(updateSQL,parameters2);
+                Utilities.showMessage(this, "Saved", "Story added to favorites.");
+                favorite.setText(R.string.remove_from_favorites);
+            }
+        }
+        cur.close();
     }
 
     private int getCurrentAudioCount() {
