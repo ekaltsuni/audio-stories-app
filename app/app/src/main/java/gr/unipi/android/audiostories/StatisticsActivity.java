@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.ScrollView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -26,13 +27,15 @@ import gr.unipi.android.audiostories.constant.ContextConstants;
 
 public class StatisticsActivity extends AppCompatActivity {
     ContextConstants ctxConstants;
+    ScrollView scrollView;
     TableLayout tableLayout;
     int totalCount = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_statistics);
-        tableLayout = findViewById(R.id.tableLayout);
+        scrollView = findViewById(R.id.scrollView);
+        tableLayout = scrollView.findViewById(R.id.tableLayout);
         // For translatable constants
         ctxConstants = new ContextConstants(this);
         // Needed for percentages
@@ -51,19 +54,14 @@ public class StatisticsActivity extends AppCompatActivity {
 
     }
 
-    private void addPercentages() {
-        TableRow audioPlaysRow = createRow();
-        addTitle(ctxConstants.STATISTICS_REPLAYS, audioPlaysRow);
-        Cursor cur = sDatabase.rawQuery(SQL_SELECT_ALL_TITLE_AND_COUNT, null);
+    private void addFavorites() {
+        TableRow favoriteRow = createRow();
+        addTitle(ctxConstants.STATISTICS_FAVORITE, favoriteRow, 0);
+        Cursor cur = sDatabase.rawQuery(SQL_SELECT_ALL_FAVORITE, null);
         while (cur.moveToNext()) {
             TableRow row = createRow();
             TextView text = new TextView(this);
-            String sb =
-                    getResources().getString(Integer.parseInt(cur.getString(0))) +
-                    " : " +
-                    getPercentage(cur) +
-                    "%";
-            text.setText(sb);
+            text.setText(getResources().getString(Integer.parseInt(cur.getString(0))));
             row.addView(text);
             tableLayout.addView(row, new TableLayout.LayoutParams(
                     ViewGroup.LayoutParams.WRAP_CONTENT,
@@ -73,14 +71,19 @@ public class StatisticsActivity extends AppCompatActivity {
         cur.close();
     }
 
-    private void addFavorites() {
-        TableRow favoriteRow = createRow();
-        addTitle(ctxConstants.STATISTICS_FAVORITE, favoriteRow);
-        Cursor cur = sDatabase.rawQuery(SQL_SELECT_ALL_FAVORITE, null);
+    private void addPercentages() {
+        TableRow audioPlaysRow = createRow();
+        addTitle(ctxConstants.STATISTICS_REPLAYS, audioPlaysRow, 50);
+        Cursor cur = sDatabase.rawQuery(SQL_SELECT_ALL_TITLE_AND_COUNT, null);
         while (cur.moveToNext()) {
             TableRow row = createRow();
             TextView text = new TextView(this);
-            text.setText(getResources().getString(Integer.parseInt(cur.getString(0))));
+            String sb =
+                    getResources().getString(Integer.parseInt(cur.getString(0))) +
+                            " : " +
+                            getPercentage(cur) +
+                            "%";
+            text.setText(sb);
             row.addView(text);
             tableLayout.addView(row, new TableLayout.LayoutParams(
                     ViewGroup.LayoutParams.WRAP_CONTENT,
@@ -99,10 +102,10 @@ public class StatisticsActivity extends AppCompatActivity {
         return favoriteRow;
     }
 
-    private void addTitle(String msg, TableRow row) {
+    private void addTitle(String msg, TableRow row, int topPadding) {
         TextView titleText = new TextView(this);
         titleText.setText(Html.fromHtml(msg));
-        titleText.setPadding(0, 25, 0, 0);
+        titleText.setPadding(0, topPadding, 0, 0);
         row.addView(titleText);
         tableLayout.addView(row, new TableLayout.LayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT,
