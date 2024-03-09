@@ -1,7 +1,11 @@
 package gr.unipi.android.audiostories;
 
+import static gr.unipi.android.audiostories.constant.AppConstants.SQL_SELECT_ALL_FAVORITE;
+import static gr.unipi.android.audiostories.constant.AppConstants.SQL_SELECT_ALL_TITLE_AND_COUNT;
+import static gr.unipi.android.audiostories.constant.AppConstants.SQL_SUM_OF_COUNTS;
 import static gr.unipi.android.audiostories.constant.AppConstants.sDatabase;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.database.Cursor;
@@ -22,41 +26,59 @@ import gr.unipi.android.audiostories.constant.ContextConstants;
 
 public class StatisticsActivity extends AppCompatActivity {
     ContextConstants ctxConstants;
+    TableLayout tableLayout;
     int totalCount = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_statistics);
+        tableLayout = findViewById(R.id.tableLayout);
         // For translatable constants
         ctxConstants = new ContextConstants(this);
-
-        Cursor cur = sDatabase.rawQuery("SELECT SUM(audioCount) FROM StoryStats", null);
+        // Needed for percentages
+        Cursor cur = sDatabase.rawQuery(SQL_SUM_OF_COUNTS, null);
         if (cur.moveToFirst()) totalCount = cur.getInt(0);
+        cur.close();
+        // Populate tables
         addRowsToTable();
     }
 
     private void addRowsToTable() {
-        TableLayout tableLayout = findViewById(R.id.tableLayout);
+        // Add the "Favorite Stories" rows
+        addFavorites();
+        // Add the "Audio Plays" rows
+        addPercentages();
 
-        // Add the "Favorite Stories" row
-        TableRow favoriteRow = new TableRow(this);
-        favoriteRow.setLayoutParams(new TableLayout.LayoutParams(
-                TableLayout.LayoutParams.MATCH_PARENT,
-                TableLayout.LayoutParams.WRAP_CONTENT));
-        TextView favoriteText = new TextView(this);
-        favoriteText.setPadding(0, 0, 25, 0);
-        favoriteText.setText(Html.fromHtml(ctxConstants.STATISTICS_FAVORITE));
-        favoriteRow.addView(favoriteText);
-        tableLayout.addView(favoriteRow, new TableLayout.LayoutParams(
-                ViewGroup.LayoutParams.WRAP_CONTENT,
-                ViewGroup.LayoutParams.MATCH_PARENT
-        ));
-        Cursor cur = sDatabase.rawQuery("SELECT titleResourceId FROM StoryStats WHERE favorite = 1", null);
+    }
+
+    private void addPercentages() {
+        TableRow audioPlaysRow = createRow();
+        addTitle(ctxConstants.STATISTICS_REPLAYS, audioPlaysRow);
+        Cursor cur = sDatabase.rawQuery(SQL_SELECT_ALL_TITLE_AND_COUNT, null);
         while (cur.moveToNext()) {
-            TableRow row = new TableRow(this);
-            row.setLayoutParams(new TableLayout.LayoutParams(
-                    TableLayout.LayoutParams.MATCH_PARENT,
-                    TableLayout.LayoutParams.WRAP_CONTENT));
+            TableRow row = createRow();
+            TextView text = new TextView(this);
+            String sb =
+                    getResources().getString(Integer.parseInt(cur.getString(0))) +
+                    " : " +
+                    getPercentage(cur) +
+                    "%";
+            text.setText(sb);
+            row.addView(text);
+            tableLayout.addView(row, new TableLayout.LayoutParams(
+                    ViewGroup.LayoutParams.WRAP_CONTENT,
+                    ViewGroup.LayoutParams.MATCH_PARENT
+            ));
+        }
+        cur.close();
+    }
+
+    private void addFavorites() {
+        TableRow favoriteRow = createRow();
+        addTitle(ctxConstants.STATISTICS_FAVORITE, favoriteRow);
+        Cursor cur = sDatabase.rawQuery(SQL_SELECT_ALL_FAVORITE, null);
+        while (cur.moveToNext()) {
+            TableRow row = createRow();
             TextView text = new TextView(this);
             text.setText(getResources().getString(Integer.parseInt(cur.getString(0))));
             row.addView(text);
@@ -65,42 +87,32 @@ public class StatisticsActivity extends AppCompatActivity {
                     ViewGroup.LayoutParams.MATCH_PARENT
             ));
         }
+        cur.close();
+    }
 
-        // Add the "Audio Plays" row
-        TableRow audioPlaysRow = new TableRow(this);
-        audioPlaysRow.setLayoutParams(new TableLayout.LayoutParams(
+    @NonNull
+    private TableRow createRow() {
+        TableRow favoriteRow = new TableRow(this);
+        favoriteRow.setLayoutParams(new TableLayout.LayoutParams(
                 TableLayout.LayoutParams.MATCH_PARENT,
                 TableLayout.LayoutParams.WRAP_CONTENT));
-        TextView audioPlaysText = new TextView(this);
-        audioPlaysText.setText(Html.fromHtml(ctxConstants.STATISTICS_REPLAYS));
-        audioPlaysText.setPadding(0, 25, 0, 0);
-        audioPlaysRow.addView(audioPlaysText);
-        tableLayout.addView(audioPlaysRow, new TableLayout.LayoutParams(
+        return favoriteRow;
+    }
+
+    private void addTitle(String msg, TableRow row) {
+        TextView titleText = new TextView(this);
+        titleText.setText(Html.fromHtml(msg));
+        titleText.setPadding(0, 25, 0, 0);
+        row.addView(titleText);
+        tableLayout.addView(row, new TableLayout.LayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.MATCH_PARENT
         ));
-        cur = sDatabase.rawQuery("SELECT titleResourceId, audioCount FROM StoryStats", null);
-        while (cur.moveToNext()) {
-            TableRow row = new TableRow(this);
-            row.setLayoutParams(new TableLayout.LayoutParams(
-                    TableLayout.LayoutParams.MATCH_PARENT,
-                    TableLayout.LayoutParams.WRAP_CONTENT));
-            TextView text = new TextView(this);
-            StringBuilder sb = new StringBuilder();
-            sb
-                    .append(getResources().getString(Integer.parseInt(cur.getString(0))))
-                    .append(" : ")
-                    .append(Math.round(cur.getInt(1) / (double)totalCount * 100))
-                    .append("%");
-            text.setText(sb.toString());
-            row.addView(text);
-            tableLayout.addView(row, new TableLayout.LayoutParams(
-                    ViewGroup.LayoutParams.WRAP_CONTENT,
-                    ViewGroup.LayoutParams.MATCH_PARENT
-            ));
-        }
-        cur.close();
+    }
 
+    private long getPercentage(Cursor cur) {
+        if (totalCount > 0) return Math.round(cur.getInt(1) / (double) totalCount * 100);
+        return 0;
     }
 
 }

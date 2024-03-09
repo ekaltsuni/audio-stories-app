@@ -16,4 +16,7 @@
     <string name="unipi_audio_stories">Audio-Märchen</string>
     <string name="my_audio_stats">Meine Story-Statistiken</string>
     <string name="remove_from_favorites">Favoriten entfernen</string>
+    <string name="add_to_favorites_msg">Die Geschichte wurde zu den Favoriten hinzugefügt.</string>
+    <string name="remove_from_favorites_msg">Die Geschichte wurde aus den Favoriten entfernt.</string>
+    <string name="update_title">Aktualisierung</string>
 </resources>

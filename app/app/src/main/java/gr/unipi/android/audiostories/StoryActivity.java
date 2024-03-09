@@ -8,6 +8,10 @@ import static gr.unipi.android.audiostories.constant.AppConstants.FIREBASE_NEWLI
 import static gr.unipi.android.audiostories.constant.AppConstants.FIREBASE_STORY_INFO_PATH;
 import static gr.unipi.android.audiostories.constant.AppConstants.FIREBASE_STORY_TEXT_PATH;
 import static gr.unipi.android.audiostories.constant.AppConstants.LANGUAGE_EXTRAS_KEY;
+import static gr.unipi.android.audiostories.constant.AppConstants.SQL_CHECK_IF_FAVORITE;
+import static gr.unipi.android.audiostories.constant.AppConstants.SQL_SELECT_COUNT;
+import static gr.unipi.android.audiostories.constant.AppConstants.SQL_UPDATE_COUNT;
+import static gr.unipi.android.audiostories.constant.AppConstants.SQL_UPDATE_FAVORITE;
 import static gr.unipi.android.audiostories.constant.AppConstants.TITLE_EXTRAS_KEY;
 import static gr.unipi.android.audiostories.constant.AppConstants.sDatabase;
 
@@ -58,39 +62,35 @@ public class StoryActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_story);
-
+        storyTitle = findViewById(R.id.storyTitle);
+        infoTable = findViewById(R.id.infoTable);
+        storyText = findViewById(R.id.storyText);
+        storyText.setJustificationMode(JUSTIFICATION_MODE_INTER_WORD);
+        imageView = findViewById(R.id.imageView);
+        favorite = findViewById(R.id.favorite);
         // For translatable constants
         ctxConstants = new ContextConstants(this);
         String title = getIntent().getStringExtra(TITLE_EXTRAS_KEY);
         String language = getIntent().getStringExtra(LANGUAGE_EXTRAS_KEY);
         // Get the story object from the HashMap of stories.
         currentStory = AppConstants.storyMap.get(title);
-
-        // Get the needed components.
-        storyTitle = findViewById(R.id.storyTitle);
-        // number that matches database resource id for multilanguage, apothikeuw int sti vasi kai matcharw titlo
-        storyTitle.setText(currentStory.getTitleResourceId());
-        infoTable = findViewById(R.id.infoTable);
-        storyText = findViewById(R.id.storyText);
-        storyText.setJustificationMode(JUSTIFICATION_MODE_INTER_WORD);
-        imageView = findViewById(R.id.imageView);
-        favorite = findViewById(R.id.favorite);
-
         // Initialize Text to Speech
         ttsInstance = new MyTts(this);
-
         // Set the components' contents.
+        storyTitle.setText(currentStory.getTitleResourceId());
         imageView.setImageResource(currentStory.getImageId());
         database = FirebaseDatabase.getInstance();
         reference = database.getReference(format(FIREBASE_STORY_TEXT_PATH, currentStory.getKey()));
         addStoryDatabaseListener();
         reference = database.getReference(format(FIREBASE_STORY_INFO_PATH, currentStory.getKey()));
         setStoryInfoDatabaseListener(language);
-
         // Set favorite's button initial text
-        String checkSQL = "SELECT EXISTS (SELECT * FROM StoryStats WHERE titleResourceId = ? AND favorite = 1)";
+        checkIfFavorite();
+    }
+
+    private void checkIfFavorite() {
         String[] parameters = {String.valueOf(currentStory.getTitleResourceId())};
-        Cursor cur = sDatabase.rawQuery(checkSQL, parameters);
+        Cursor cur = sDatabase.rawQuery(SQL_CHECK_IF_FAVORITE, parameters);
         if (cur.moveToFirst()) {
             if (cur.getInt(0) > 0) {
                 favorite.setText(R.string.remove_from_favorites);
@@ -98,6 +98,7 @@ public class StoryActivity extends AppCompatActivity {
                 favorite.setText(R.string.add_to_favorites);
             }
         }
+        cur.close();
     }
 
     private void addStoryDatabaseListener() {
@@ -139,7 +140,7 @@ public class StoryActivity extends AppCompatActivity {
             }
         });
     }
-    // add rows info to table
+
     private void addInfoRow(int i, String country, String date, String author) {
         TableRow row = new TableRow(StoryActivity.this);
         row.setLayoutParams(new TableLayout.LayoutParams(
@@ -166,11 +167,11 @@ public class StoryActivity extends AppCompatActivity {
     }
 
     public void speak(View view) {
-        String updateSQL = "UPDATE StoryStats SET audioCount = ? WHERE titleResourceId = ?";
+        // +1 to story count
         int newAudioCount = getCurrentAudioCount() + 1;
         Object[] parameters = {newAudioCount, currentStory.getTitleResourceId()};
-        sDatabase.execSQL(updateSQL,parameters);
-
+        sDatabase.execSQL(SQL_UPDATE_COUNT,parameters);
+        // Start speaking
         String storyContent = storyTitle.getText().toString();
         ttsInstance.speak(storyContent);
         storyContent = storyText.getText().toString();
@@ -186,20 +187,18 @@ public class StoryActivity extends AppCompatActivity {
     }
 
     public void save(View view) {
-        String checkSQL = "SELECT EXISTS (SELECT * FROM StoryStats WHERE titleResourceId = ? AND favorite = 1)";
         String[] parameters = {String.valueOf(currentStory.getTitleResourceId())};
-        Cursor cur = sDatabase.rawQuery(checkSQL, parameters);
+        Cursor cur = sDatabase.rawQuery(SQL_CHECK_IF_FAVORITE, parameters);
         if (cur.moveToFirst()) {
-            String updateSQL = "UPDATE StoryStats SET favorite = ? WHERE titleResourceId = ?";
             if (cur.getInt(0) > 0) {
                 Object[] parameters2 = {0, currentStory.getTitleResourceId()};
-                sDatabase.execSQL(updateSQL,parameters2);
-                Utilities.showMessage(this, "Removed", "Story removed from favorites.");
+                sDatabase.execSQL(SQL_UPDATE_FAVORITE,parameters2);
+                Utilities.showMessage(this, getString(R.string.update_title), getString(R.string.remove_from_favorites_msg));
                 favorite.setText(R.string.add_to_favorites);
             } else {
                 Object[] parameters2 = {1, currentStory.getTitleResourceId()};
-                sDatabase.execSQL(updateSQL,parameters2);
-                Utilities.showMessage(this, "Saved", "Story added to favorites.");
+                sDatabase.execSQL(SQL_UPDATE_FAVORITE,parameters2);
+                Utilities.showMessage(this, getString(R.string.update_title), getString(R.string.add_to_favorites_msg));
                 favorite.setText(R.string.remove_from_favorites);
             }
         }
@@ -207,11 +206,10 @@ public class StoryActivity extends AppCompatActivity {
     }
 
     private int getCurrentAudioCount() {
-        Cursor cursor = sDatabase.rawQuery("SELECT audioCount FROM StoryStats WHERE titleResourceId = ?",
-                new String[]{String.valueOf(currentStory.getTitleResourceId())});
+        String[] parameters = {String.valueOf(currentStory.getTitleResourceId())};
+        Cursor cursor = sDatabase.rawQuery(SQL_SELECT_COUNT, parameters);
         int currentAudioCount = cursor.moveToFirst() ? cursor.getInt(0) : 0;
         cursor.close();
         return currentAudioCount;
     }
-
 }

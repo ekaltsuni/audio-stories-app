@@ -16,4 +16,7 @@
     <string name="unipi_audio_stories">Audio Fairytales</string>
     <string name="my_audio_stats">My story stats</string>
     <string name="remove_from_favorites">Remove from Favorites</string>
+    <string name="add_to_favorites_msg">Story was added to favorites.</string>
+    <string name="remove_from_favorites_msg">Story was removed from favorites.</string>
+    <string name="update_title">Update</string>
 </resources>

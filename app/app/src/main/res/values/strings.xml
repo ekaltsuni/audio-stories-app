@@ -15,5 +15,8 @@
     <string name="audio_plays">Αναπαραγωγές ήχου:</string>
     <string name="unipi_audio_stories">Ηχητικά Παραμύθια</string>
     <string name="my_audio_stats">Τα στατιστικά μου</string>
-    <string name="remove_from_favorites">Αφαίρεση απ\' τα Αγαπημένα</string>
+    <string name="remove_from_favorites">Αφαίρεση από τα Αγαπημένα</string>
+    <string name="add_to_favorites_msg">Η ιστορία προστέθηκε στα αγαπημένα.</string>
+    <string name="remove_from_favorites_msg">Η ιστορία αφαιρέθηκε από τα αγαπημένα.</string>
+    <string name="update_title">Ανανέωση</string>
 </resources>

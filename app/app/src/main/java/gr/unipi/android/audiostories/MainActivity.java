@@ -2,13 +2,14 @@ package gr.unipi.android.audiostories;
 
 import static gr.unipi.android.audiostories.constant.AppConstants.LANGUAGE_EXTRAS_KEY;
 import static gr.unipi.android.audiostories.constant.AppConstants.LANGUAGE_PREFS_KEY;
+import static gr.unipi.android.audiostories.constant.AppConstants.SQL_CREATE_DB;
+import static gr.unipi.android.audiostories.constant.AppConstants.SQL_INSERT_INITIAL_VALUES;
 import static gr.unipi.android.audiostories.constant.AppConstants.TITLE_EXTRAS_KEY;
 import static gr.unipi.android.audiostories.constant.AppConstants.sDatabase;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -25,32 +26,21 @@ public class MainActivity extends AppCompatActivity {
     String language;
     public MyTts myTts;
 
-    String createTableSQL = "CREATE TABLE if not exists StoryStats (\n" +
-            "    titleResourceId STRING PRIMARY KEY    NOT NULL,\n" +
-            "    favorite BOOLEAN,\n" +
-            "    audioCount INTEGER \n" +
-            ");";
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        imageView = findViewById(R.id.imageView2);
-
+        imageView = findViewById(R.id.logo);
         languageGroup = findViewById(R.id.languageGroup);
+        // Language changes functionality
         setInitialLanguage();
         addLocaleListeners(languageGroup);
-
         // Initialize text to speech
         myTts = new MyTts(this);
-
+        // DB initialization
         sDatabase = openOrCreateDatabase("StoryStats.db",MODE_PRIVATE,null);
-        sDatabase.execSQL(createTableSQL);
-
-        // Insert initial values if the table was just created
+        sDatabase.execSQL(SQL_CREATE_DB);
         insertInitialValues();
-
         // In landscape mode hide extra information
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
             imageView.setVisibility(View.GONE);
@@ -65,10 +55,8 @@ public class MainActivity extends AppCompatActivity {
                 {R.string.snow_white, false, 0},
                 {R.string.ugly_duckling, false, 0}
         };
-
         for (Object[] entry : entries) {
-            String insertSQL = "INSERT OR IGNORE INTO StoryStats (titleResourceId, favorite, audioCount) VALUES (?, ?, ?)";
-            sDatabase.execSQL(insertSQL, entry);
+            sDatabase.execSQL(SQL_INSERT_INITIAL_VALUES, entry);
         }
     }
 
@@ -93,7 +81,6 @@ public class MainActivity extends AppCompatActivity {
         // Usage of 'if' instead of 'switch' as resources are no longer declared final.
         if (view.getId() == R.id.red_riding_hood) {
             intent.putExtra(TITLE_EXTRAS_KEY, "red_riding_hood");
-            // update sqlite +1
         } else if (view.getId() == R.id.snow_white) {
             intent.putExtra(TITLE_EXTRAS_KEY, "snow_white");
         } else if (view.getId() == R.id.sleeping_beauty) {
