@@ -22,13 +22,16 @@ import gr.unipi.android.audiostories.constant.ContextConstants;
 
 public class StatisticsActivity extends AppCompatActivity {
     ContextConstants ctxConstants;
-
+    int totalCount = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_statistics);
         // For translatable constants
         ctxConstants = new ContextConstants(this);
+
+        Cursor cur = sDatabase.rawQuery("SELECT SUM(audioCount) FROM StoryStats", null);
+        if (cur.moveToFirst()) totalCount = cur.getInt(0);
         addRowsToTable();
     }
 
@@ -86,8 +89,9 @@ public class StatisticsActivity extends AppCompatActivity {
             StringBuilder sb = new StringBuilder();
             sb
                     .append(getResources().getString(Integer.parseInt(cur.getString(0))))
-                    .append(" -> ")
-                    .append(cur.getInt(1));
+                    .append(" : ")
+                    .append(Math.round(cur.getInt(1) / (double)totalCount * 100))
+                    .append("%");
             text.setText(sb.toString());
             row.addView(text);
             tableLayout.addView(row, new TableLayout.LayoutParams(
