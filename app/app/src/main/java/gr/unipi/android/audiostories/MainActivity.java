@@ -7,9 +7,11 @@ import static gr.unipi.android.audiostories.constant.AppConstants.sDatabase;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.RadioGroup;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,6 +20,7 @@ import gr.unipi.android.audiostories.utility.LocaleUtilities;
 
 public class MainActivity extends AppCompatActivity {
     RadioGroup languageGroup;
+    ImageView imageView;
     SharedPreferences prefs;
     String language;
     public MyTts myTts;
@@ -33,6 +36,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        imageView = findViewById(R.id.imageView2);
+
         languageGroup = findViewById(R.id.languageGroup);
         setInitialLanguage();
         addLocaleListeners(languageGroup);
@@ -45,6 +50,11 @@ public class MainActivity extends AppCompatActivity {
 
         // Insert initial values if the table was just created
         insertInitialValues();
+
+        // In landscape mode hide extra information
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            imageView.setVisibility(View.GONE);
+        }
     }
 
     private void insertInitialValues() {

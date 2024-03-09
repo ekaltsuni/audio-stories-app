@@ -9,10 +9,10 @@
     <string name="author">Συγγραφέας</string>
     <string name="date">Έτος Κυκλοφορίας</string>
     <string name="country">Χώρα Κυκλοφορίας</string>
-    <string name="my_audio_stats">Τα Στατιστικά μου</string>
     <string name="add_to_favorites">Προσθήκη στα Αγαπημένα</string>
     <string name="story_statistics">Στατιστικά</string>
-    <string name="favorite_stories">Αγαπημένα:</string>
+    <string name="favorite_stories">Αγαπημένα</string>
     <string name="audio_plays">Αναπαραγωγές ήχου:</string>
     <string name="unipi_audio_stories">Ηχητικά Παραμύθια</string>
+    <string name="my_audio_stats">Τα στατιστικά μου</string>
 </resources>

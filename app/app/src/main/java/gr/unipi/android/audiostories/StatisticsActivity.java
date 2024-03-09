@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.text.Html;
 import android.util.Log;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -17,21 +18,17 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import gr.unipi.android.audiostories.constant.ContextConstants;
+
 public class StatisticsActivity extends AppCompatActivity {
+    ContextConstants ctxConstants;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_statistics);
-
-//        Cursor cursor = sDatabase.rawQuery("SELECT audioCount FROM StoryStats WHERE titleResourceId = ?",
-//                new String[]{String.valueOf(R.string.red_riding_hood)});
-//        int audioCount = 0;
-//
-//        if (cursor.moveToFirst()) {
-//            audioCount = cursor.getInt(cursor.getColumnIndex("audioCount"));
-//        }
-//        cursor.close();
+        // For translatable constants
+        ctxConstants = new ContextConstants(this);
         addRowsToTable();
     }
 
@@ -44,7 +41,8 @@ public class StatisticsActivity extends AppCompatActivity {
                 TableLayout.LayoutParams.MATCH_PARENT,
                 TableLayout.LayoutParams.WRAP_CONTENT));
         TextView favoriteText = new TextView(this);
-        favoriteText.setText(getResources().getString(R.string.favorite_stories));
+        favoriteText.setPadding(0, 0, 25, 0);
+        favoriteText.setText(Html.fromHtml(ctxConstants.STATISTICS_FAVORITE));
         favoriteRow.addView(favoriteText);
         tableLayout.addView(favoriteRow, new TableLayout.LayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT,
@@ -71,7 +69,8 @@ public class StatisticsActivity extends AppCompatActivity {
                 TableLayout.LayoutParams.MATCH_PARENT,
                 TableLayout.LayoutParams.WRAP_CONTENT));
         TextView audioPlaysText = new TextView(this);
-        audioPlaysText.setText(R.string.audio_plays);
+        audioPlaysText.setText(Html.fromHtml(ctxConstants.STATISTICS_REPLAYS));
+        audioPlaysText.setPadding(0, 25, 0, 0);
         audioPlaysRow.addView(audioPlaysText);
         tableLayout.addView(audioPlaysRow, new TableLayout.LayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT,

@@ -53,8 +53,6 @@ public class StoryActivity extends AppCompatActivity {
     ImageView imageView;
     Button favorite;
     private MyTts ttsInstance;
-    int audioCount;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +61,6 @@ public class StoryActivity extends AppCompatActivity {
 
         // For translatable constants
         ctxConstants = new ContextConstants(this);
-        // apo dw tha traviksw tous titlous gia ta favorites => sqlite currentstory.title
         String title = getIntent().getStringExtra(TITLE_EXTRAS_KEY);
         String language = getIntent().getStringExtra(LANGUAGE_EXTRAS_KEY);
         // Get the story object from the HashMap of stories.
