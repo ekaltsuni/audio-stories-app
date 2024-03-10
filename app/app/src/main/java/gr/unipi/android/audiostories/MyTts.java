@@ -4,12 +4,9 @@ import android.speech.tts.TextToSpeech;
 public class MyTts {
     private TextToSpeech tts;
     private Context context;
-    TextToSpeech.OnInitListener  initListener= new TextToSpeech.OnInitListener() {
-        @Override
-        public void onInit(int status) {
-            if (status == TextToSpeech.SUCCESS) {
-                //tts.setLanguage(Locale.forLanguageTag("el"));
-            }
+    TextToSpeech.OnInitListener  initListener= status -> {
+        if (status == TextToSpeech.SUCCESS) {
+            //tts.setLanguage(Locale.forLanguageTag("el"));
         }
     };
 

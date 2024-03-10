@@ -55,6 +55,7 @@ public class StoryActivity extends AppCompatActivity {
     TableLayout infoTable;
     TextView storyText;
     ImageView imageView;
+    Button audioButton;
     Button favorite;
     private MyTts ttsInstance;
 
@@ -67,6 +68,7 @@ public class StoryActivity extends AppCompatActivity {
         storyText = findViewById(R.id.storyText);
         storyText.setJustificationMode(JUSTIFICATION_MODE_INTER_WORD);
         imageView = findViewById(R.id.imageView);
+        audioButton = findViewById(R.id.audioButton);
         favorite = findViewById(R.id.favorite);
         // For translatable constants
         ctxConstants = new ContextConstants(this);
@@ -167,15 +169,23 @@ public class StoryActivity extends AppCompatActivity {
     }
 
     public void speak(View view) {
-        // +1 to story count
-        int newAudioCount = getCurrentAudioCount() + 1;
-        Object[] parameters = {newAudioCount, currentStory.getTitleResourceId()};
-        sDatabase.execSQL(SQL_UPDATE_COUNT,parameters);
-        // Start speaking
-        String storyContent = storyTitle.getText().toString();
-        ttsInstance.speak(storyContent);
-        storyContent = storyText.getText().toString();
-        ttsInstance.speak(storyContent);
+        if (audioButton.getText().equals(getString(R.string.audio_story))) {
+            audioButton.setText(R.string.audio_story_end);
+            // +1 to story count
+            int newAudioCount = getCurrentAudioCount() + 1;
+            Object[] parameters = {newAudioCount, currentStory.getTitleResourceId()};
+            sDatabase.execSQL(SQL_UPDATE_COUNT, parameters);
+            // Start speaking
+            String storyContent = storyTitle.getText().toString();
+            ttsInstance.speak(storyContent);
+            storyContent = storyText.getText().toString();
+            ttsInstance.speak(storyContent);
+        } else {
+            audioButton.setText(R.string.audio_story);
+            if (ttsInstance != null) {
+                ttsInstance.stopSpeaking();
+            }
+        }
     }
 
     protected void onPause() {

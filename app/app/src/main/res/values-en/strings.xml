@@ -19,4 +19,5 @@
     <string name="add_to_favorites_msg">Story was added to favorites.</string>
     <string name="remove_from_favorites_msg">Story was removed from favorites.</string>
     <string name="update_title">Update</string>
+    <string name="audio_story_end">Stop</string>
 </resources>
