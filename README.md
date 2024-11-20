@@ -1,2 +1,2 @@
 # audio-stories-app
-Android audio stories app for kids
+Android application narrating popular children fairytales in English, Greek, and German.
